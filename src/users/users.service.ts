@@ -10,9 +10,15 @@ import { LoginUserDto } from './dto/login-user.dto';
 @Injectable()
 export class UsersService {
     constructor(
-        @InjectRepository(User) 
+        @InjectRepository(User)
         private usersRepository: Repository<User>,
-    ) {}
+    ) { }
+
+    async findByEmail(email: string): Promise<User | null> {
+        return this.usersRepository.findOne({
+            where: { email },
+        });
+    }
 
     findAll(): Promise<User[]> {
         return this.usersRepository.find();
@@ -49,25 +55,5 @@ export class UsersService {
 
     async remove(id: string): Promise<void> {
         await this.usersRepository.delete(id);
-    }
-
-    async login(loginDto: LoginUserDto): Promise<string> {
-        const { email, password } = loginDto;
-
-        const user = await this.usersRepository.findOne({
-            where: { email }
-        });
-
-        if (!user) {
-            throw new NotFoundException('Usuário não encontrado');
-        }
-
-        const passwordValid = await bcrypt.compare(password, user.passwordHash);
-
-        if (!passwordValid) {
-            throw new UnauthorizedException('Senha incorreta');
-        }
-
-        return `Login bem-sucedido! Bem-vindo, ${user.name}`;
     }
 }
