@@ -16,4 +16,10 @@ export class EntradaService {
         return this.entradaRepo.save(nova);
     }
 
+    async listar() {
+        return this.entradaRepo.find({
+            order: { data: 'DESC'}
+        })
+    }
+
 }

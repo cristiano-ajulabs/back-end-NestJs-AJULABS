@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post } from "@nestjs/common";
 import { CreateEntradaDto } from "./dto/create-entrada.dto";
 import { EntradaService } from "./entrada.service";
 
@@ -10,4 +10,10 @@ export class EntradaController {
     criar(@Body() dados: CreateEntradaDto) {
         return this.entradaService.criar(dados);
     }
+
+    @Get()
+    listar() {
+        return this.entradaService.listar();
+    }
+    
 }
