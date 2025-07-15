@@ -22,4 +22,13 @@ export class EntradaService {
         })
     }
 
+    async getTotalEntradas(): Promise<number> {
+        const resultado = await this.entradaRepo
+            .createQueryBuilder("entrada")
+            .select("SUM(entrada.valor)", "total")
+            .getRawOne();
+
+        return Number(resultado.total) || 0;    
+    }
+
 }

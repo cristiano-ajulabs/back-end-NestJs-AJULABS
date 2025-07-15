@@ -16,4 +16,19 @@ export class SaidaService {
         const debito = this.saidaRepo.create(saida)
         return this.saidaRepo.save(debito);
     }
+
+    async listar(){
+        return this.saidaRepo.find({
+            order: {data: 'DESC'}
+        });
+    }
+
+    async getTotalSaidas(): Promise<number> {
+        const result = await this.saidaRepo
+        .createQueryBuilder("saida")
+        .select("SUM(saida.valor)", "total")
+        .getRawOne();
+
+        return Number(result.total) || 0;
+    }
 }

@@ -15,5 +15,11 @@ export class EntradaController {
     listar() {
         return this.entradaService.listar();
     }
+
+    @Get('total')
+    async totalEntradas() {
+        return this.entradaService.getTotalEntradas();
+    }
+
     
 }
