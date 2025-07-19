@@ -1,6 +1,7 @@
-import { Body, Controller, Post, Get } from "@nestjs/common";
+import { Body, Controller, Post, Get, UseGuards } from "@nestjs/common";
 import { SaidaService } from "./saida.service";
 import { CreateSaidaDto } from "./dto/create-saida.dto";
+import { AuthGuard } from "@nestjs/passport";
 
 
 
@@ -22,5 +23,10 @@ export class saidaController{
     @Get('total')
     async totalSaidas() {
         return this.saidaService.getTotalSaidas();
+    }
+
+    @Get('resumo')
+    async getSaidasPorTipo() {
+        return this.saidaService.getSaidasPorTipo();
     }
 }

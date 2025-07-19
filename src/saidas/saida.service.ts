@@ -31,4 +31,13 @@ export class SaidaService {
 
         return Number(result.total) || 0;
     }
+
+    async getSaidasPorTipo(): Promise<{ tipo: string; valor: number;}[]> {
+        return this.saidaRepo
+        .createQueryBuilder('saida')
+        .select('saida.tipo', 'tipo')
+        .addSelect('SUM(saida.valor)', 'total')
+        .groupBy('saida.tipo')
+        .getRawMany();
+    }
 }
